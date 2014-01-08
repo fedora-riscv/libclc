@@ -1,8 +1,8 @@
-%define git 20130715gitce72a50
+%define git 20140108gitc002f62
 
 Name:           libclc
 Version:        0.0.1
-Release:        0.%{git}%{?dist}
+Release:        1.%{git}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -14,6 +14,7 @@ Source0:        %{name}-%{git}.tar.xz
 
 BuildRequires:  llvm >= 3.3-0.6, llvm-devel, llvm-static
 BuildRequires:  clang >= 3.3-0.6
+BuildRequires:  libstdc++-devel
 BuildRequires:  zlib-devel
 BuildRequires:  python
 
@@ -78,5 +79,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Wed Jan 08 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-1.20140108gitc002f62
+- Could not use latest master because it doesn't build
+- Update to a fresher snapshot
+
 * Sun Jul 14 2013 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-0.20130714git5217211
 - Initial package
