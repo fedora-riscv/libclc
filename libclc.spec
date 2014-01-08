@@ -12,6 +12,9 @@ URL:            http://libclc.llvm.org/
 # $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
 Source0:        %{name}-%{git}.tar.xz
 
+# Only builds on x86
+ExclusiveArch:	%{ix86} x86_64
+
 BuildRequires:  llvm >= 3.3-0.6, llvm-devel, llvm-static
 BuildRequires:  clang >= 3.3-0.6
 BuildRequires:  libstdc++-devel
@@ -82,6 +85,7 @@ make %{?_smp_mflags}
 * Wed Jan 08 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-1.20140108gitc002f62
 - Could not use latest master because it doesn't build
 - Update to a fresher snapshot
+- Limit to x86
 
 * Sun Jul 14 2013 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-0.20130714git5217211
 - Initial package
