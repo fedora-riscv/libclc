@@ -2,7 +2,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        1.%{git}%{?dist}
+Release:        2.%{git}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -73,15 +73,18 @@ make %{?_smp_mflags}
 %files
 %doc LICENSE.TXT README.TXT CREDITS.TXT
 %{_libexecdir}/*.bc
+%{_includedir}/clc
 
 %files devel
 %doc
-%{_includedir}/clc
 # FIXME is there a predefined variable for pkgconfig?
 %{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Mon Jan 13 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-2.20140108gitc002f62
+- Move headers to main package, needed by clover at runtime
+
 * Wed Jan 08 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-1.20140108gitc002f62
 - Could not use latest master because it doesn't build
 - Update to a fresher snapshot
