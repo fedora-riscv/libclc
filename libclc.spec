@@ -1,8 +1,10 @@
-%define git 20140108gitc002f62
+%global commit 434109476bb009b3773e48465ce8bb32a3a3e69e
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global checkout 20140429git%{shortcommit}
 
 Name:           libclc
 Version:        0.0.1
-Release:        2.%{git}%{?dist}
+Release:        3.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -10,7 +12,7 @@ URL:            http://libclc.llvm.org/
 # Created using:
 # $ export PKG=libclc-$(date +%Y%m%d)git$(git describe --always)
 # $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
-Source0:        %{name}-%{git}.tar.xz
+Source0:        %{name}-%{checkout}.tar.xz
 
 # Only builds on x86
 ExclusiveArch:	%{ix86} x86_64
@@ -58,11 +60,15 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{git}
+%setup -q -n %{name}-%{checkout}
 
 
 %build
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libexecdir} --pkgconfigdir=%{_libdir}/pkgconfig/
+
+# fstack-protector-strin is currently not supported by clang++
+sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
+
 make %{?_smp_mflags}
 
 
@@ -82,6 +88,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue Apr 29 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-2.20140429git4341094
+- Update to latest snapshot
+- Support for AMD Kabini
+
 * Mon Jan 13 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-2.20140108gitc002f62
 - Move headers to main package, needed by clover at runtime
 
