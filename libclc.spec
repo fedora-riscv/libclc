@@ -4,7 +4,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        3.%{checkout}%{?dist}
+Release:        4.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -88,6 +88,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-4.20140429git4341094
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Tue Apr 29 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-2.20140429git4341094
 - Update to latest snapshot
 - Support for AMD Kabini
