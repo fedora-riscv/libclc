@@ -1,18 +1,22 @@
-%global commit 434109476bb009b3773e48465ce8bb32a3a3e69e
+%global commit 61127c58ffe9a798cf0b3403efe9b1bbfcb80a5f
+%global commitdate 20140705
+%global checkout %{commitdate}git%{shortcommit}
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20140429git%{shortcommit}
+
+%global shortname clc
 
 Name:           libclc
 Version:        0.0.1
-Release:        4.%{checkout}%{?dist}
+Release:        5.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
 URL:            http://libclc.llvm.org/
-# Created using:
+# created using:
 # $ export PKG=libclc-$(date +%Y%m%d)git$(git describe --always)
 # $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
-Source0:        %{name}-%{checkout}.tar.xz
+#Source0:        %{name}-%{checkout}.tar.xz
+Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
 # Only builds on x86
 ExclusiveArch:	%{ix86} x86_64
@@ -60,11 +64,11 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{checkout}
+%setup -q -n "%{name}-%{commit}"
 
 
 %build
-./configure.py --prefix=%{_prefix} --libexecdir=%{_libexecdir} --pkgconfigdir=%{_libdir}/pkgconfig/
+./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
 # fstack-protector-strin is currently not supported by clang++
 sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
@@ -78,16 +82,19 @@ make %{?_smp_mflags}
 
 %files
 %doc LICENSE.TXT README.TXT CREDITS.TXT
-%{_libexecdir}/*.bc
-%{_includedir}/clc
+%{_libdir}/%{shortname}/*.bc
+%{_includedir}/%{shortname}
 
 %files devel
 %doc
-# FIXME is there a predefined variable for pkgconfig?
 %{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Sat Jul 05 2014 Fabian Deutsch <fabiand@fedoraproject.org> - 0.0.1-5
+- Update to latest snapshot to support AMD Kaveri APUs
+- Move bitcode files to an arch dependent dir, as they are arch dependent
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-4.20140429git4341094
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
