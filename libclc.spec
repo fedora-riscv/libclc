@@ -1,5 +1,5 @@
-%global commit 61127c58ffe9a798cf0b3403efe9b1bbfcb80a5f
-%global commitdate 20140705
+%global commit e822ae33c3547e0dcc8a32da97f987427b8bfe1d
+%global commitdate 20140901
 %global checkout %{commitdate}git%{shortcommit}
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
@@ -7,7 +7,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        7.%{checkout}%{?dist}
+Release:        8.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -16,15 +16,17 @@ URL:            http://libclc.llvm.org/
 # $ export PKG=libclc-$(date +%Y%m%d)git$(git describe --always)
 # $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
 #Source0:        %{name}-%{checkout}.tar.xz
-Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
+Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.xz
 
 # Only builds on x86
 ExclusiveArch:	%{ix86} x86_64
 
-BuildRequires:  llvm-devel >= 3.3-0.6, llvm-static
-BuildRequires:  clang-devel >= 3.3-0.6
-BuildRequires:  zlib-devel
+BuildRequires:  clang-devel
+BuildRequires:  libedit-devel
+BuildRequires:  llvm-devel
+BuildRequires:  llvm-static
 BuildRequires:  python
+BuildRequires:  zlib-devel
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -63,10 +65,10 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n "%{name}-%{commit}"
-
+%setup -q -n "%{name}-%{commitdate}git%{shortcommit}"
 
 %build
+CFLAGS="%{optflags} -D__extern_always_inline=inline"
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
 # fstack-protector-strong is currently not supported by clang++
@@ -90,6 +92,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue Oct 28 2014 Peter Robinson <pbrobinson@fedoraproject.org> - 0.0.1-8.20140901gite822ae3
+- Update to a newer snapshot
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-7.20140705git61127c5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
