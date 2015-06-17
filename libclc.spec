@@ -7,7 +7,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        9.%{checkout}%{?dist}
+Release:        10.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -92,6 +92,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-10.20140901gite822ae3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Thu Jan 08 2015 Adel Gadllah <adel.gadllah@gmail.com> - 0.0.1-9.20140901gite822ae3
 - Rebuilt with newer llvm
 
