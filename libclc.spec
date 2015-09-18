@@ -1,13 +1,16 @@
-%global commit e822ae33c3547e0dcc8a32da97f987427b8bfe1d
-%global commitdate 20140901
+%global commit 4346c30bae8b1a64acba564f6775cb0bacd026e4
+%global commitdate 20150918
 %global checkout %{commitdate}git%{shortcommit}
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global shortname clc
 
+# this stop us generating an empty debuginfo
+%global debug_package %{nil}
+
 Name:           libclc
 Version:        0.0.1
-Release:        10.%{checkout}%{?dist}
+Release:        11.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -16,14 +19,14 @@ URL:            http://libclc.llvm.org/
 # $ export PKG=libclc-$(date +%Y%m%d)git$(git describe --always)
 # $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
 #Source0:        %{name}-%{checkout}.tar.xz
-Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.xz
+Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
 # Only builds on x86
 ExclusiveArch:	%{ix86} x86_64
 
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
-BuildRequires:  llvm-devel
+BuildRequires:  llvm-devel >= 3.7
 BuildRequires:  llvm-static
 BuildRequires:  python
 BuildRequires:  zlib-devel
@@ -65,7 +68,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n "%{name}-%{commitdate}git%{shortcommit}"
+%setup -q -n "%{name}-%{commit}"
 
 %build
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
@@ -92,6 +95,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Fri Sep 18 2015 Dave Airlie <airlied@redhat.com> 0.0.1-11.20150918git4346c30
+- latest snapshot - set build req to llvm 3.7
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.0.1-10.20140901gite822ae3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
