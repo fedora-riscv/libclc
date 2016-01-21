@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        12.%{checkout}%{?dist}
+Release:        13.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -21,7 +21,7 @@ URL:            http://libclc.llvm.org/
 #Source0:        %{name}-%{checkout}.tar.xz
 Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
-ExclusiveArch:	%{ix86} x86_64 aaarch64 %{power64}
+ExclusiveArch:	%{ix86} x86_64 aarch64 %{power64}
 
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
@@ -94,6 +94,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Thu Jan 21 2016 Peter Robinson <pbrobinson@fedoraproject.org> 0.0.1-13.20150918git4346c30
+- Spell aarch64 correctly
+
 * Thu Jan 21 2016 Peter Robinson <pbrobinson@fedoraproject.org> 0.0.1-12.20150918git4346c30
 - Now supported on aarch64/Power64
 
