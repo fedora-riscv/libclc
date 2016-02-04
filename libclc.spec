@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.0.1
-Release:        13.%{checkout}%{?dist}
+Release:        14.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -94,6 +94,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.0.1-14.20150918git4346c30
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Thu Jan 21 2016 Peter Robinson <pbrobinson@fedoraproject.org> 0.0.1-13.20150918git4346c30
 - Spell aarch64 correctly
 
