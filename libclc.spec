@@ -1,5 +1,5 @@
-%global commit 4346c30bae8b1a64acba564f6775cb0bacd026e4
-%global commitdate 20150918
+%global commit dc330a37a302063f2f541f397b3b00a2d384d290
+%global commitdate 20160207
 %global checkout %{commitdate}git%{shortcommit}
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
@@ -9,8 +9,8 @@
 %global debug_package %{nil}
 
 Name:           libclc
-Version:        0.0.1
-Release:        14.%{checkout}%{?dist}
+Version:        0.2.0
+Release:        1.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -26,7 +26,6 @@ ExclusiveArch:	%{ix86} x86_64 aarch64 %{power64}
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
 BuildRequires:  llvm-devel >= 3.7
-BuildRequires:  llvm-static
 BuildRequires:  python
 BuildRequires:  zlib-devel
 
@@ -94,6 +93,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Sun Feb 07 2016 Fabian Deutsch <fabiand@fedoraproject.org> - 0.2.0-1.20160207gitdc330a3
+- Update to latest upstream
+- Dorp llvm-static BR
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.0.1-14.20150918git4346c30
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
