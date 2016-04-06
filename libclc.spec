@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        1.%{checkout}%{?dist}
+Release:        2.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -72,8 +72,15 @@ developing applications that use %{name}.
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
+%ifarch %{power64}
+# temporary disable stack-protector on power64 as workaround due to the bug in llvm
+# which causes the build failure on secondary arch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1324085
+sed -i "s/fstack-protector-strong/fno-stack-protector/" Makefile
+%else
 # fstack-protector-strong is currently not supported by clang++
 sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
+%endif
 
 make %{?_smp_mflags}
 
@@ -93,6 +100,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue Apr 05 2016 Than Ngo <than@redhat.com> - 0.2.0-2.20160207gitdc330a3
+- temporary disable stack-protector on powe64 as workaround due to the bug in llvm
+  which causes the build failure on power64
+
 * Sun Feb 07 2016 Fabian Deutsch <fabiand@fedoraproject.org> - 0.2.0-1.20160207gitdc330a3
 - Update to latest upstream
 - Dorp llvm-static BR
