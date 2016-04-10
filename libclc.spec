@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        2.%{checkout}%{?dist}
+Release:        3.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -21,7 +21,7 @@ URL:            http://libclc.llvm.org/
 #Source0:        %{name}-%{checkout}.tar.xz
 Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
-ExclusiveArch:	%{ix86} x86_64 aarch64 %{power64}
+ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64}
 
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
@@ -100,6 +100,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Sun Apr 10 2016 Peter Robinson <pbrobinson@fedoraproject.org> 0.2.0-3.20160207gitdc330a3
+- Build on ARMv7
+
 * Tue Apr 05 2016 Than Ngo <than@redhat.com> - 0.2.0-2.20160207gitdc330a3
 - temporary disable stack-protector on powe64 as workaround due to the bug in llvm
   which causes the build failure on power64
