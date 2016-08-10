@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        3.%{checkout}%{?dist}
+Release:        4.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -21,7 +21,7 @@ URL:            http://libclc.llvm.org/
 #Source0:        %{name}-%{checkout}.tar.xz
 Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
-ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64}
+ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
@@ -72,7 +72,12 @@ developing applications that use %{name}.
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
-%ifarch %{power64}
+%ifarch s390 s390x
+# clang requires z10 at minimum
+# workaround until we change the defaults for Fedora
+sed -i 's/-march=z9-109 /-march=z10 /' Makefile
+%endif
+%ifarch %{power64} s390 s390x
 # temporary disable stack-protector on power64 as workaround due to the bug in llvm
 # which causes the build failure on secondary arch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1324085
@@ -100,6 +105,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Wed Aug 10 2016 Dan Horák <dan[at]danny.cz> - 0.2.0-4.20160207gitdc330a3
+- Build on s390x
+
 * Sun Apr 10 2016 Peter Robinson <pbrobinson@fedoraproject.org> 0.2.0-3.20160207gitdc330a3
 - Build on ARMv7
 
