@@ -10,7 +10,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        4.%{checkout}%{?dist}
+Release:        5.%{checkout}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -105,6 +105,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-5.20160207gitdc330a3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Wed Aug 10 2016 Dan Horák <dan[at]danny.cz> - 0.2.0-4.20160207gitdc330a3
 - Build on s390x
 
