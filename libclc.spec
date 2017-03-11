@@ -1,7 +1,6 @@
-%global commit dc330a37a302063f2f541f397b3b00a2d384d290
-%global commitdate 20160207
-%global checkout %{commitdate}git%{shortcommit}
+%global commit 520743b0b72862a987ead6213dc1a5321a2010f9
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global checkout git%{shortcommit}
 
 %global shortname clc
 
@@ -10,15 +9,11 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        5.%{checkout}%{?dist}
+Release:        6.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
 URL:            http://libclc.llvm.org/
-# created using:
-# $ export PKG=libclc-$(date +%Y%m%d)git$(git describe --always)
-# $ git archive --prefix $PKG/ --format tar HEAD | xz > $PKG.tar.xz
-#Source0:        %{name}-%{checkout}.tar.xz
 Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
@@ -64,9 +59,8 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-
 %prep
-%setup -q -n "%{name}-%{commit}"
+%autosetup -n %{name}-%{commit}
 
 %build
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
@@ -87,24 +81,25 @@ sed -i "s/fstack-protector-strong/fno-stack-protector/" Makefile
 sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
 %endif
 
-make %{?_smp_mflags}
-
+%make_build
 
 %install
 %make_install
 
-
 %files
-%doc LICENSE.TXT README.TXT CREDITS.TXT
+%license LICENSE.TXT
+%doc README.TXT CREDITS.TXT
+%dir %{_libdir}/%{shortname}
 %{_libdir}/%{shortname}/*.bc
 %{_includedir}/%{shortname}
 
 %files devel
-%doc
 %{_libdir}/pkgconfig/%{name}.pc
 
-
 %changelog
+* Sat Mar 11 2017 Igor Gnatenko <ignatenko@redhat.com> - 0.2.0-6.git520743b
+- Update to latest snapshot which supports LLVM 3.9
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-5.20160207gitdc330a3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
