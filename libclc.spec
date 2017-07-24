@@ -1,4 +1,4 @@
-%global commit 520743b0b72862a987ead6213dc1a5321a2010f9
+%global commit 1cb3fbf504e25d86d972e8b2af3e24571767046b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global checkout git%{shortcommit}
 
@@ -9,11 +9,11 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        6.git%{shortcommit}%{?dist}
+Release:        7.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
-URL:            http://libclc.llvm.org/
+URL:            https://libclc.llvm.org
 Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
 
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
@@ -97,6 +97,9 @@ sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jul 24 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.2.0-7.git1cb3fbf
+- Update to latest git snapshot
+
 * Sat Mar 11 2017 Igor Gnatenko <ignatenko@redhat.com> - 0.2.0-6.git520743b
 - Update to latest snapshot which supports LLVM 3.9
 
