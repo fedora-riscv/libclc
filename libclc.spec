@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        7.git%{shortcommit}%{?dist}
+Release:        8.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -97,6 +97,9 @@ sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-8.git1cb3fbf
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Mon Jul 24 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.2.0-7.git1cb3fbf
 - Update to latest git snapshot
 
