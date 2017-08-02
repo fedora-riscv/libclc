@@ -66,9 +66,6 @@ developing applications that use %{name}.
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
-# fstack-protector-strong is currently not supported by clang++
-sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
-
 %make_build
 
 %install
