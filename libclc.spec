@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        8.git%{shortcommit}%{?dist}
+Release:        9.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -66,20 +66,8 @@ developing applications that use %{name}.
 CFLAGS="%{optflags} -D__extern_always_inline=inline"
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
-%ifarch s390 s390x
-# clang requires z10 at minimum
-# workaround until we change the defaults for Fedora
-sed -i 's/-march=z9-109 /-march=z10 /' Makefile
-%endif
-%ifarch %{power64} s390 s390x
-# temporary disable stack-protector on power64 as workaround due to the bug in llvm
-# which causes the build failure on secondary arch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1324085
-sed -i "s/fstack-protector-strong/fno-stack-protector/" Makefile
-%else
 # fstack-protector-strong is currently not supported by clang++
 sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
-%endif
 
 %make_build
 
@@ -97,6 +85,9 @@ sed -i "s/fstack-protector-strong/fstack-protector/" Makefile
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Aug 02 2017 Dan Horák <dan[at]danny.cz> - 0.2.0-9.git1cb3fbf
+- Drop build workarounds
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-8.git1cb3fbf
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
