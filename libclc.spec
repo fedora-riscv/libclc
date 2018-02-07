@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        9.git%{shortcommit}%{?dist}
+Release:        10.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -82,6 +82,9 @@ CFLAGS="%{optflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-10.git1cb3fbf
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Wed Aug 02 2017 Dan Horák <dan[at]danny.cz> - 0.2.0-9.git1cb3fbf
 - Drop build workarounds
 
