@@ -1,4 +1,4 @@
-%global commit 1cb3fbf504e25d86d972e8b2af3e24571767046b
+%global commit c45b9dfe5257f8dfec9a193c07073ee95210ecc1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global checkout git%{shortcommit}
 
@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        10.git%{shortcommit}%{?dist}
+Release:        11.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -20,7 +20,7 @@ ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
 BuildRequires:  clang-devel
 BuildRequires:  libedit-devel
-BuildRequires:  llvm-devel >= 3.7
+BuildRequires:  llvm-devel >= 3.9
 BuildRequires:  python
 BuildRequires:  zlib-devel
 
@@ -63,7 +63,8 @@ developing applications that use %{name}.
 %autosetup -n %{name}-%{commit}
 
 %build
-CFLAGS="%{optflags} -D__extern_always_inline=inline"
+export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
+%set_build_flags
 ./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
 
 %make_build
@@ -82,6 +83,9 @@ CFLAGS="%{optflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jul 09 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.2.0-11.gitc45b9df
+- Update to latest git snapshot
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-10.git1cb3fbf
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
