@@ -1,4 +1,4 @@
-%global commit c45b9dfe5257f8dfec9a193c07073ee95210ecc1
+%global commit 1ecb16dd7d8b8e9151027faab996f27b2ac508e3
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global checkout git%{shortcommit}
 
@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        12.git%{shortcommit}%{?dist}
+Release:        13.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -83,6 +83,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Dec 04 2018 Dave Airlie <airlied@redhat.com> - 0.2.0-13.git1ecb16d
+- Update to latest libclc snapshot
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-12.gitc45b9df
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
