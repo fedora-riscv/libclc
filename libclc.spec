@@ -9,7 +9,7 @@
 
 Name:           libclc
 Version:        0.2.0
-Release:        15.git%{shortcommit}%{?dist}
+Release:        16.git%{shortcommit}%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -83,6 +83,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-16.git9f6204e
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Wed Apr 03 2019 Dave Airlie <airlied@redhat.com> - 0.2.0-15.git9f6204e
 - Update to latest upstream snapshot (prior to moving to cmake)
 
