@@ -23,6 +23,7 @@ BuildRequires:  libedit-devel
 BuildRequires:  llvm-devel >= 3.9
 BuildRequires:  python
 BuildRequires:  zlib-devel
+BuildRequires: make
 
 %description
 libclc is an open source, BSD licensed implementation of the library
