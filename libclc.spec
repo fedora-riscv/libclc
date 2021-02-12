@@ -1,29 +1,24 @@
-%global commit 9f6204ec04a8cadb6bef57caa71e3161c4f398f2
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout git%{shortcommit}
-
-%global shortname clc
-
 # this stop us generating an empty debuginfo
 %global debug_package %{nil}
 
+%global shortname clc
+
 Name:           libclc
-Version:        0.2.0
-Release:        19.git%{shortcommit}%{?dist}
+Version:        11.0.0
+Release:        1%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
 URL:            https://libclc.llvm.org
-Source0:        https://github.com/llvm-mirror/%{name}/archive/%{commit}/%{name}-%{checkout}.tar.gz
-
+Source0:        https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/%{name}-%{version}.src.tar.xz
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
-BuildRequires:  clang-devel
+BuildRequires:  clang-devel >= %{version}
 BuildRequires:  libedit-devel
-BuildRequires:  llvm-devel >= 3.9
-BuildRequires:  python
+BuildRequires:  llvm-devel >= %{version}
+BuildRequires:  python-unversioned-command
 BuildRequires:  zlib-devel
-BuildRequires: make
+BuildRequires:  cmake
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -61,17 +56,17 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%autosetup -n %{name}-%{commit}
+%autosetup -n %{name}-%{version}.src
 
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %set_build_flags
-./configure.py --prefix=%{_prefix} --libexecdir=%{_libdir}/%{shortname}/ --pkgconfigdir=%{_libdir}/pkgconfig/
+%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir}
 
-%make_build
+%cmake_build
 
 %install
-%make_install
+%cmake_install
 
 %files
 %license LICENSE.TXT
@@ -84,6 +79,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Feb 12 2021 Stephen Gallagher <sgallagh@redhat.com> - 11.0.0-1
+- Latest upstream release that matches llvm 11.0.0
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-19.git9f6204e
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
