@@ -4,7 +4,7 @@
 %global shortname clc
 
 Name:           libclc
-Version:        11.0.0
+Version:        12.0.0
 Release:        1%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
@@ -61,12 +61,16 @@ developing applications that use %{name}.
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %set_build_flags
-%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir}
+%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir} \
+    -DLIBCLC_TARGETS_TO_BUILD="amdgcn--;amdgcn--amdhsa;r600--;nvptx--;nvptx64--;nvptx--nvidiacl;nvptx64--nvidiacl"
 
 %cmake_build
 
 %install
 %cmake_install
+
+%check
+%cmake_build --target test
 
 %files
 %license LICENSE.TXT
@@ -79,6 +83,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Apr 16 2021 Tom Stellard <tstellar@redhat.com> - 12.0.0-1
+- 12.0.0 Release
+
 * Fri Feb 12 2021 Stephen Gallagher <sgallagh@redhat.com> - 11.0.0-1
 - Latest upstream release that matches llvm 11.0.0
 
