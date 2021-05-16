@@ -5,7 +5,7 @@
 
 Name:           libclc
 Version:        12.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -19,6 +19,7 @@ BuildRequires:  llvm-devel >= %{version}
 BuildRequires:  python-unversioned-command
 BuildRequires:  zlib-devel
 BuildRequires:  cmake
+BuildRequires:  spirv-llvm-translator-tools
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -61,8 +62,7 @@ developing applications that use %{name}.
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %set_build_flags
-%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir} \
-    -DLIBCLC_TARGETS_TO_BUILD="amdgcn--;amdgcn--amdhsa;r600--;nvptx--;nvptx64--;nvptx--nvidiacl;nvptx64--nvidiacl"
+%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir}
 
 %cmake_build
 
@@ -77,12 +77,17 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %doc README.TXT CREDITS.TXT
 %dir %{_libdir}/%{shortname}
 %{_libdir}/%{shortname}/*.bc
+%{_libdir}/%{shortname}/spirv-mesa3d-.spv
+%{_libdir}/%{shortname}/spirv64-mesa3d-.spv
 %{_includedir}/%{shortname}
 
 %files devel
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon May 17 2021 Dave Airlie <airlied@redhat.com> - 12.0.0-2
+- build the spirv
+
 * Fri Apr 16 2021 Tom Stellard <tstellar@redhat.com> - 12.0.0-1
 - 12.0.0 Release
 
