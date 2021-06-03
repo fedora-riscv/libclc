@@ -2,15 +2,18 @@
 %global debug_package %{nil}
 
 %global shortname clc
+%global libclc_version 12.0.1
+#global rc_ver 3
+%global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
 Name:           libclc
-Version:        12.0.0
-Release:        2%{?dist}
+Version:	%{libclc_version}%{?rc_ver:~rc%{rc_ver}}
+Release:        1%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
 URL:            https://libclc.llvm.org
-Source0:        https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/%{name}-%{version}.src.tar.xz
+Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
 BuildRequires:  clang-devel >= %{version}
@@ -57,7 +60,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%autosetup -n %{name}-%{version}.src
+%autosetup -n %{libclc_srcdir}
 
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
@@ -85,6 +88,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jul 14 2021 Tom Stellard <tstellar@redhat.com> - 12.0.1-1
+- 12.0.1 Release
+
 * Mon May 17 2021 Dave Airlie <airlied@redhat.com> - 12.0.0-2
 - build the spirv
 
