@@ -3,7 +3,7 @@
 
 %global shortname clc
 %global libclc_version 12.0.1
-%global rc_ver 1
+%global rc_ver 3
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
 Name:           libclc
@@ -88,6 +88,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jun 30 2021 Tom Stellard <tstellar@redhat.com> - 12.0.1~rc3-1
+- 12.0.1-rc3 Release
+
 * Thu Jun 03 2021 Tom Stellard <tstellar@redhat.com> - 12.0.1~rc1-1
 - 12.0.1-rc1 Release
 
