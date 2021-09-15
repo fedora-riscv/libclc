@@ -8,7 +8,7 @@
 
 Name:           libclc
 Version:	%{libclc_version}%{?rc_ver:~rc%{rc_ver}}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -65,7 +65,7 @@ developing applications that use %{name}.
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %set_build_flags
-%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_libdir}
+%cmake -DCMAKE_INSTALL_DATADIR:PATH=%{_lib}
 
 %cmake_build
 
@@ -89,6 +89,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Sep 15 2021 Peter Robinson <pbrobinson@fedoraproject.org> - 13.0.0~rc1-2
+- Fix library paths (rhbz 1960955)
+
 * Mon Aug 09 2021 Tom Stellard <tstellar@redhat.com> - 13.0.0~rc1-1
 - 13.0.0-rc1 Release
 
