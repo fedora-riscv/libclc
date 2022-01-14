@@ -2,8 +2,8 @@
 %global debug_package %{nil}
 
 %global shortname clc
-%global libclc_version 13.0.0
-#global rc_ver 3
+%global libclc_version 13.0.1
+%global rc_ver 2
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
 Name:           libclc
@@ -14,6 +14,8 @@ Summary:        An open source implementation of the OpenCL 1.1 library requirem
 License:        BSD
 URL:            https://libclc.llvm.org
 Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz
+Source1:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz.sig
+Source2:	tstellar-gpg-key.asc
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
 BuildRequires:  clang-devel >= %{version}
@@ -23,6 +25,9 @@ BuildRequires:  python-unversioned-command
 BuildRequires:  zlib-devel
 BuildRequires:  cmake
 BuildRequires:  spirv-llvm-translator-tools
+
+# For signature verification
+BuildRequires:	gnupg2
 
 %description
 libclc is an open source, BSD licensed implementation of the library
@@ -60,6 +65,7 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %autosetup -n %{libclc_srcdir}
 
 %build
@@ -89,6 +95,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Jan 14 2022 Nikita Popov <npopov@redhat.com> - 13.0.1~rc1-1
+- Update to LLVM 13.0.1rc2
+
 * Fri Oct 01 2021 Tom Stellard <tstellar@redhat.com> - 13.0.0-1
 - 13.0.0 Release
 
