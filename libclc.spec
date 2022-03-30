@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 
 %global shortname clc
-%global libclc_version 13.0.1
+%global libclc_version 14.0.0
 #global rc_ver 2
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
@@ -95,6 +95,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Mar 30 2022 Timm Bäder <tbaeder@redhat.com> - 14.0.0-1
+- Update to 14.0.0
+
 * Thu Feb 03 2022 Nikita Popov <npopov@redhat.com> - 13.0.1-1
 - Update to LLVM 13.0.1 final
 
