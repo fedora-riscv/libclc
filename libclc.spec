@@ -8,7 +8,7 @@
 
 Name:           libclc
 Version:	%{libclc_version}%{?rc_ver:~rc%{rc_ver}}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -95,6 +95,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 14.0.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Mon Jun 20 2022 Timm Bäder <tbaeder@redhat.com> - 14.0.5-1
 - Update to 14.0.5
 
