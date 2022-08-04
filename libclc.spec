@@ -2,20 +2,21 @@
 %global debug_package %{nil}
 
 %global shortname clc
-%global libclc_version 14.0.5
-#global rc_ver 2
+%global libclc_version 15.0.0
+#global rc_ver 3
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
 Name:           libclc
 Version:	%{libclc_version}%{?rc_ver:~rc%{rc_ver}}
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
 URL:            https://libclc.llvm.org
 Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz
 Source1:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz.sig
-Source2:	tstellar-gpg-key.asc
+Source2:	release-keys.asc
+
 ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
 
 BuildRequires:  clang-devel >= %{version}
@@ -66,7 +67,7 @@ developing applications that use %{name}.
 
 %prep
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
-%autosetup -n %{libclc_srcdir}
+%autosetup -n %{libclc_srcdir} -p2
 
 %build
 export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
@@ -95,6 +96,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Sep 06 2022 Nikita Popov <npopov@redhat.com> - 15.0.0-1
+- Update to LLVM 15.0.0
+
 * Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 14.0.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
