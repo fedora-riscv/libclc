@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 
 %global shortname clc
-%global libclc_version 13.0.0
+%global libclc_version 13.0.1
 #global rc_ver 3
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
@@ -89,6 +89,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Aug 03 2022 Tom Stellard <tstellar@redhat.com> - 13.0.1-1
+- 13.0.1 Release
+
 * Fri Oct 01 2021 Tom Stellard <tstellar@redhat.com> - 13.0.0-1
 - 13.0.0 Release
 
