@@ -3,7 +3,7 @@
 
 %global shortname clc
 %global libclc_version 16.0.0
-%global rc_ver 3
+%global rc_ver 4
 %global libclc_srcdir libclc-%{libclc_version}%{?rc_ver:rc%{rc_ver}}.src
 
 Name:           libclc
@@ -96,6 +96,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Mar 15 2023 Tulio Magno Quites Machado Filho <tuliom@redhat.com> - 16.0.0~rc4-1
+- Update to LLVM 16.0.0 RC4
+
 * Wed Mar 1 2023 Tulio Magno Quites Machado Filho <tuliom@redhat.com> - 16.0.0~rc3-1
 - Update to LLVM 16.0.0 RC3
 
