@@ -8,7 +8,7 @@
 
 Name:           libclc
 Version:	%{libclc_version}%{?rc_ver:~rc%{rc_ver}}
-Release:        2%{?dist}
+Release:        2.rv64%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        BSD
@@ -17,7 +17,7 @@ Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc
 Source1:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz.sig
 Source2:	release-keys.asc
 
-ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x
+ExclusiveArch:	%{ix86} x86_64 %{arm} aarch64 %{power64} s390x riscv64
 
 BuildRequires:  clang-devel >= %{version}
 BuildRequires:  libedit-devel
@@ -96,6 +96,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Apr 07 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 15.0.7-2.rv64
+- Add riscv64.
+
 * Thu Jan 19 2023 Fedora Release Engineering <releng@fedoraproject.org> - 15.0.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
 
