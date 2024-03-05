@@ -8,7 +8,7 @@
 
 Name:           libclc
 Version:        %{libclc_version}%{?rc_ver:~rc%{rc_ver}}
-Release:        1%{?dist}
+Release:        1.rv64%{?dist}
 Summary:        An open source implementation of the OpenCL 1.1 library requirements
 
 License:        Apache-2.0 WITH LLVM-exception OR BSD OR MIT
@@ -17,7 +17,7 @@ Source0:        https://github.com/llvm/llvm-project/releases/download/llvmorg-%
 Source1:        https://github.com/llvm/llvm-project/releases/download/llvmorg-%{libclc_version}%{?rc_ver:-rc%{rc_ver}}/%{libclc_srcdir}.tar.xz.sig
 Source2:        release-keys.asc
 
-ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64 %{power64} s390x
+ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64 %{power64} s390x riscv64
 
 BuildRequires:  clang-devel >= %{version}
 BuildRequires:  libedit-devel
@@ -96,6 +96,9 @@ export CFLAGS="%{build_cflags} -D__extern_always_inline=inline"
 %{_includedir}/%{shortname}
 
 %changelog
+* Fri Apr 07 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 15.0.7-2.rv64
+- Add riscv64.
+
 * Wed Nov 29 2023 Tulio Magno Quites Machado Filho <tuliom@redhat.com> - 17.0.6-1
 - Update to LLVM 17.0.6
 
